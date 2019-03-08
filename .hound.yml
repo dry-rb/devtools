@@ -1,0 +1,6 @@
+rubocop:
+  enabled: true
+  version: 0.64.0
+
+rubocop:
+  config_file: .rubocop.yml
