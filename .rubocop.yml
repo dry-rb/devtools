@@ -14,12 +14,15 @@ Style/LambdaCall:
 Style/StabbyLambdaParentheses:
   Enabled: false
 
+Layout/SpaceInLambdaLiteral:
+  Enabled: false
+
 Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented
 
-Metrics/LineLength:                                                             
-  Max: 100 
+Metrics/LineLength:
+  Max: 100
 
 Metrics/MethodLength:
   Max: 22
@@ -41,3 +44,7 @@ Metrics/CyclomaticComplexity:
 
 Lint/BooleanSymbol:
   Enabled: false
+
+Style/AccessModifierDeclarations:
+  Enabled: false
+
