@@ -14,6 +14,9 @@ Style/LambdaCall:
 Style/StabbyLambdaParentheses:
   Enabled: false
 
+Style/FormatString:
+  Enabled: false
+
 Layout/SpaceInLambdaLiteral:
   Enabled: false
 
