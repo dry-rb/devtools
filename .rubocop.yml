@@ -1,6 +1,9 @@
 AllCops:
   TargetRubyVersion: 2.4
 
+Style/EachWithObject:
+  Enabled: false
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: single_quotes
