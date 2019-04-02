@@ -54,3 +54,6 @@ Lint/BooleanSymbol:
 Style/AccessModifierDeclarations:
   Enabled: false
 
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+
