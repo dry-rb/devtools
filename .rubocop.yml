@@ -20,6 +20,9 @@ Style/StabbyLambdaParentheses:
 Style/FormatString:
   Enabled: false
 
+Style/Documentation:
+  Enabled: false
+
 Layout/SpaceInLambdaLiteral:
   Enabled: false
 
