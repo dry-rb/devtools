@@ -84,3 +84,6 @@ Rubocop/Style/ConditionalAssignment:
 
 Rubocop/Naming/MethodName:
   enabled: false
+
+Rubocop/Style/CaseEquality:
+  enabled: false
