@@ -80,10 +80,7 @@ Style/SymbolArray:
     - "spec/**/*_spec.rb"
 
 Rubocop/Style/ConditionalAssignment:
-  enabled: false
+  Enabled: false
 
 Rubocop/Naming/MethodName:
-  enabled: false
-
-Rubocop/Style/CaseEquality:
-  enabled: false
+  Enabled: false
