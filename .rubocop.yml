@@ -79,8 +79,8 @@ Style/SymbolArray:
   Exclude:
     - "spec/**/*_spec.rb"
 
-Rubocop/Style/ConditionalAssignment:
+Style/ConditionalAssignment:
   Enabled: false
 
-Rubocop/Naming/MethodName:
+Naming/MethodName:
   Enabled: false
