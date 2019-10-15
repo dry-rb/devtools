@@ -22,7 +22,7 @@ jobs:
           bundle install --jobs 4 --retry 3 --without benchmarks sql
       - name: Symlink ossy
         run: ln -sf "$(bundle show ossy)/bin/ossy" bin/ossy
-      - name: Trigger dry-rb.org deploy
+      - name: Trigger config synchronization in dry-rb repositories
         env:
           GITHUB_LOGIN: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
