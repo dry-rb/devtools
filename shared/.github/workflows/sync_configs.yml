@@ -27,6 +27,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           bin/ossy github update_file dry-rb/devtools .github/workflows/docsite.yml
+          bin/ossy github update_file dry-rb/devtools .github/workflows/sync_configs.yml
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
