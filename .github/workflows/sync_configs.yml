@@ -27,4 +27,5 @@ jobs:
           GITHUB_LOGIN: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
+          bin/ossy github workflow dry-rb/dry-schema sync_configs
           bin/ossy github workflow dry-rb/dry-validation sync_configs
