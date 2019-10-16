@@ -1,3 +1,5 @@
+name: trigger sync configs
+
 on:
   push:
     paths:
