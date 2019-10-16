@@ -1,15 +1,13 @@
-name: sync_configs
-
 on:
   push:
     paths:
-      - .github/workflows/sync_configs.yml
+      - .github/workflows/trigger_sync_configs.yml
       - shared/**
     branches:
       - master
 
 jobs:
-  update-docs:
+  main:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
