@@ -25,6 +25,6 @@ jobs:
         run: ln -sf "$(bundle show ossy)/bin/ossy" bin/ossy
       - name: Trigger config synchronization in dry-rb repositories
         env:
-          GITHUB_LOGIN: ${{ github.actor }}
+          GITHUB_LOGIN: dry-bot
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: for name in `cat projects`; do bin/ossy gh w dry-rb/$name sync_configs; done
