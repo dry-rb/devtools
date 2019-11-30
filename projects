@@ -10,7 +10,6 @@ dry-initializer
 dry-logic
 dry-matcher
 dry-monads
-dry-monads
 dry-schema
 dry-struct
 dry-system
