@@ -8,6 +8,7 @@ dry-equalizer
 dry-events
 dry-inflector
 dry-initializer
+dry-logger
 dry-logic
 dry-matcher
 dry-monads
