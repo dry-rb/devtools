@@ -17,6 +17,7 @@ dry-schema
 dry-struct
 dry-system
 dry-transaction
+dry-transformer
 dry-types
 dry-validation
 dry-view
