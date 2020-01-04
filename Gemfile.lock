@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/solnic/ossy.git
-  revision: bc34dae7438ffbecfc6aa48703517f709a28b700
+  revision: cd5a109f676bcdbd7b76d8c18e04dc6ecc20b2b1
   branch: master
   specs:
     ossy (0.0.1)
