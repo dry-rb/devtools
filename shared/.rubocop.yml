@@ -74,6 +74,9 @@ Lint/HandleExceptions:
   Exclude:
     - "spec/spec_helper.rb"
 
+Naming/PredicateName:
+  Enabled: false
+
 Naming/FileName:
   Exclude:
     - "lib/dry-*.rb"
