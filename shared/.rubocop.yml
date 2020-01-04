@@ -44,11 +44,11 @@ Metrics/MethodLength:
 Metrics/ClassLength:
   Enabled: false
 
-Metrics/AbcSize:
-  Max: 20
-
 Metrics/BlockLength:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
 
 Metrics/CyclomaticComplexity:
   Enabled: true
