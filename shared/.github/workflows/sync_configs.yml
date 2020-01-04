@@ -43,6 +43,7 @@ jobs:
           fi
       - name: Commit changes
         run: |
+          rm bin/ossy
           git config --local user.email "dry-bot@dry-rb.org"
           git config --local user.name "dry-bot"
           git add -A
