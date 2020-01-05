@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/trigger_sync_configs.yml
+      - Gemfile
       - shared/**
       - templates/**
       - projects
