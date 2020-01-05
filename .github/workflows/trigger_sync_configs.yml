@@ -20,11 +20,9 @@ jobs:
         with:
           ruby-version: "2.6.x"
       - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
+        run: bundle install --jobs 4 --retry 3
       - name: Symlink ossy
-        run: ln -sf "$(bundle show ossy)/bin/ossy" bin/ossy
+        run: ln -sf "$(bundle info ossy --path)/bin/ossy" bin/ossy
       - name: Trigger config synchronization in dry-rb repositories
         env:
           GITHUB_LOGIN: dry-bot
