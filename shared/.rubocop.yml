@@ -101,8 +101,8 @@ Metrics/BlockLength:
   Enabled: false
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 25
 
 Metrics/CyclomaticComplexity:
   Enabled: true
-  Max: 10
+  Max: 12
