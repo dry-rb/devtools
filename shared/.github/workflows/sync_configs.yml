@@ -30,11 +30,11 @@ jobs:
         run: git clone https://github.com/dry-rb/devtools.git tmp/devtools
       - name: Merge configuration files from devtools
         run: |
-          for f in `ls tmp/devtools/shared/.github/workflows/*.yml`
+          for f in `ls tmp/devtools/workflows/*.yml`
           do
             n="$(basename $f)";
-            o=".github/workflows/custom/$n";
-            [ -f $o ] && bin/ossy c m $f $o .github/workflows/$n || echo "no custom config found for $f"
+            c=".github/workflows/custom/$n";
+            [ -f $c ] && bin/ossy c m $f $c .github/workflows/$n || echo "no custom config found for $f"
           done
       - name: Compile file templates
         run: |
