@@ -24,19 +24,21 @@ Gem::Specification.new do |spec|
   spec.metadata['source_code_uri']   = 'https://github.com/dry-rb/<%= name %>'
   spec.metadata['bug_tracker_uri']   = 'https://github.com/dry-rb/<%= name %>/issues'
 
-  spec.required_ruby_version = '>= 2.4.0'<%
+  spec.required_ruby_version = '>= 2.4.0'
+
+  # to update dependencies edit project.yml<%
   if gemspec.key?('runtime_dependencies')
-    %>
-<%
     gemspec['runtime_dependencies'].each do |dep| %>
-  spec.add_runtime_dependency <%= Array(dep).join(', ').inspect %><%
+  spec.add_runtime_dependency <%= Array(dep).map(&:inspect).join(', ') %><%
     end
   end
   if gemspec.key?('development_dependencies')
+    if gemspec.key?('runtime_dependencies')
     %>
 <%
+    end
     gemspec['development_dependencies'].each do |dep| %>
-  spec.add_development_dependency <%= Array(dep).join(', ').inspect %><%
+  spec.add_development_dependency <%= Array(dep).map(&:inspect).join(', ') %><%
     end
   end %>
 end
