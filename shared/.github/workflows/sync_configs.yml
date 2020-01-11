@@ -35,6 +35,7 @@ jobs:
             do
               bin/ossy t c tmp/devtools/templates/$t $(basename $t .erb) project.yml
             done
+            mv gemspec `echo {{ github.repository }} | cut -d / -f 2`.gemspec
           fi
       - name: Update workflow files from devtools
         run: |
