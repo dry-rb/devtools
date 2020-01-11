@@ -23,7 +23,7 @@ jobs:
           gem install bundler
           bundle config set without 'tools benchmarks docs'
       - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3 --without tools test benchmarks docs
+        run: bundle install --jobs 4 --retry 3
       - name: Symlink ossy
         run: ln -sf "$(bundle info ossy --path)/bin/ossy" bin/ossy
       - name: Clone devtools
