@@ -13,10 +13,22 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
   spec.version       = <%= inflector.camelize(path) %>::VERSION.dup
 
-  spec.summary       = <%= gemspec['summary'].inspect %>
-  spec.description   = spec.summary
+  spec.summary       = <%= gemspec['summary'].inspect %><%
+  if gemspec.key?('description')
+    if gemspec['description'].lines.size > 1
+      description = gemspec['description'].strip.split("\n").map { |l| "    #{l}\n" }.join
+    %>
+  spec.description   = <<~TEXT
+<%= description %>
+  TEXT<%
+    else %>
+  spec.description   = <%= gemspec['description'].inspect %><%
+    end
+  else %>
+  spec.description   = spec.summary<%
+  end %>
   spec.homepage      = 'https://dry-rb.org/gems/<%= name %>'
-  spec.files         = Dir['CHANGELOG.md', 'LICENSE', 'README.md', 'lib/**/*']
+  spec.files         = Dir['CHANGELOG.md', 'LICENSE', 'README.md', '<%= name %>.gemspec', 'lib/**/*']
   spec.require_paths = ['lib']
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
@@ -28,7 +40,7 @@ Gem::Specification.new do |spec|
 
   # to update dependencies edit project.yml<%
   if gemspec.key?('runtime_dependencies')
-    gemspec['runtime_dependencies'].each do |dep| %>
+    gemspec['runtime_dependencies'].sort_by { |name, *| name }.each do |dep| %>
   spec.add_runtime_dependency <%= Array(dep).map(&:inspect).join(', ') %><%
     end
   end
@@ -37,7 +49,7 @@ Gem::Specification.new do |spec|
     %>
 <%
     end
-    gemspec['development_dependencies'].each do |dep| %>
+    gemspec['development_dependencies'].sort_by { |name, *| name }.each do |dep| %>
   spec.add_development_dependency <%= Array(dep).map(&:inspect).join(', ') %><%
     end
   end %>
