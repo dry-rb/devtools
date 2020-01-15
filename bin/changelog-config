@@ -1,0 +1,89 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+
+def parse_lines(lines, skip_empty: true)
+  lines.each_with_index { |line, idx|
+    next if skip_empty && line.strip.empty?
+    yield(line, idx)
+  }
+end
+
+def release?(line)
+  %r[^## \d+\.\d+\.\d+].match?(line)
+end
+
+def entry?(type, line)
+  %r[^### #{type}].match?(line)
+end
+
+def stop_entry_parsing?(line)
+  release?(line) || line.start_with?('### ') || line.include?('[Compare')
+end
+
+def add_entry(curr, type, line)
+  (curr[type] ||= []) << line.gsub(/^(\-?\*?)/, '').strip
+end
+
+changelog_path = ARGV[0]
+output_path = changelog_path.downcase.gsub('.md', '.yml')
+
+lines = File.read(changelog_path).split("\n")
+data = []
+curr_release = nil
+curr_entry = nil
+
+parse_lines(lines) do |line, idx|
+  if %r[^## \d+\.\d+\.\d+].match?(line)
+    _, version, date = line.split
+    curr_release = { 'version' => version, 'date' => date }
+    data << curr_release
+  elsif entry?('Fixed', line)
+    parse_lines(lines[idx+1..-1], skip_empty: false) do |rl|
+      break if stop_entry_parsing?(rl)
+
+      if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
+        (curr_entry.last << "\n#{rl}").strip
+      else
+        curr_entry = add_entry(curr_release, 'fixed', rl)
+      end
+    end
+  elsif entry?('Added', line)
+    parse_lines(lines[idx+1..-1], skip_empty: false) do |rl|
+      break if stop_entry_parsing?(rl)
+
+      if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
+        (curr_entry.last << "\n#{rl}").strip
+      else
+        curr_entry = add_entry(curr_release, 'added', rl)
+      end
+    end
+  elsif entry?('Changed', line)
+    parse_lines(lines[idx+1..-1], skip_empty: false) do |rl|
+      break if stop_entry_parsing?(rl)
+
+      if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
+        (curr_entry.last << "\n#{rl}").strip
+      else
+        curr_entry = add_entry(curr_release, 'changed', rl)
+      end
+    end
+  end
+end
+
+def cleanup(input)
+  case input
+  when Array then
+    input.reject!(&:empty?)
+    input.each { |v| cleanup(v) }
+  when Hash then input.each_value { |v| cleanup(v) }
+  else
+    input.strip!
+  end
+end
+
+cleanup(data)
+
+File.write(output_path, YAML.dump(data))
+
+puts "Generated #{output_path}"
