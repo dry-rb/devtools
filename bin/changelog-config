@@ -17,6 +17,10 @@ def entry?(type, line)
   %r[^### #{type}].match?(line)
 end
 
+def summary?(line)
+  %r[^\w+].match?(line) && !release?(line) && !line.start_with?('#')
+end
+
 def stop_entry_parsing?(line)
   release?(line) || line.start_with?('### ') || line.include?('[Compare')
 end
@@ -38,6 +42,8 @@ parse_lines(lines) do |line, idx|
     _, version, date = line.split
     curr_release = { 'version' => version, 'date' => date }
     data << curr_release
+  elsif summary?(line)
+    curr_release['summary'] = line
   elsif entry?('Fixed', line)
     parse_lines(lines[idx+1..-1], skip_empty: false) do |rl|
       break if stop_entry_parsing?(rl)
