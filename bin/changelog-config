@@ -32,7 +32,19 @@ end
 changelog_path = ARGV[0]
 output_path = changelog_path.downcase.gsub('.md', '.yml')
 
-lines = File.read(changelog_path).split("\n")
+content = File.read(changelog_path)
+lines = content.split("\n")
+
+parse_lines(lines) do |line|
+  if %r[^\#{1,2} v?\d].match?(line)
+    line.gsub!(' / ', ' ')
+
+    line.gsub!(%r[^# v?(?<version>.+) (?<date>.+)$]) do |*args|
+      "## #{$~[:version]} #{$~[:date]}"
+    end
+  end
+end
+
 data = []
 curr_release = nil
 curr_entry = nil
