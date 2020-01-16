@@ -10,7 +10,7 @@ def parse_lines(lines, skip_empty: true)
 end
 
 def release?(line)
-  %r[^## \d+\.\d+\.\d+].match?(line)
+  %r[^## \d+\.\d+\.\d+].match?(line) || line.downcase.include?('unreleased')
 end
 
 def entry?(type, line)
@@ -36,10 +36,16 @@ content = File.read(changelog_path)
 lines = content.split("\n")
 
 parse_lines(lines) do |line|
+  line.gsub!(/^\#{1,2} (?<type>Fixed|Changed|Added)/) do
+    "### #{$~[:type]}"
+  end
+
   if %r[^\#{1,2} v?\d].match?(line)
     line.gsub!(' / ', ' ')
 
-    line.gsub!(%r[^# v?(?<version>.+) (?<date>.+)$]) do |*args|
+    line.gsub!(' - ', ' ')
+
+    line.gsub!(%r[^\#{1,2} v?(?<version>.+) (?<date>.+)$]) do |*args|
       "## #{$~[:version]} #{$~[:date]}"
     end
   end
@@ -50,7 +56,7 @@ curr_release = nil
 curr_entry = nil
 
 parse_lines(lines) do |line, idx|
-  if %r[^## \d+\.\d+\.\d+].match?(line)
+  if release?(line)
     _, version, date = line.split
     curr_release = { 'version' => version, 'date' => date }
     data << curr_release
@@ -96,7 +102,7 @@ def cleanup(input)
     input.each { |v| cleanup(v) }
   when Hash then input.each_value { |v| cleanup(v) }
   else
-    input.strip!
+    input.to_s.strip!
   end
 end
 
