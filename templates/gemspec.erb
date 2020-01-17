@@ -1,4 +1,5 @@
 <% path = name.gsub('-', '/')
+   files = ['CHANGELOG.md', 'LICENSE', 'README.md', "#{name}.gemspec", 'lib/**/*', *gemspec.fetch('files', [])]
 %># frozen_string_literal: true
 # this file is managed by dry-rb/devtools project
 
@@ -28,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.description   = spec.summary<%
   end %>
   spec.homepage      = 'https://dry-rb.org/gems/<%= name %>'
-  spec.files         = Dir['CHANGELOG.md', 'LICENSE', 'README.md', '<%= name %>.gemspec', 'lib/**/*']
+  spec.files         = Dir<%= files.inspect %>
   spec.require_paths = ['lib']
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
