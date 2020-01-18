@@ -1,4 +1,4 @@
-<% releases.each do |r| %>
+<% releases.each_with_index do |r, idx| %>
 ## <%= r.version %> <%= r.date %>
 
 <% if r.summary %>
@@ -29,4 +29,11 @@
 - <%= log %>
 <% end %>
 <% end %>
+<% curr_ver = r.date.eql?('unreleased') ? 'master' : "v#{r.version}" %>
+<% prev_rel = releases[idx + 1] %>
+<% if prev_rel %>
+<% ver_range = "v#{prev_rel.version}...#{curr_ver}" %>
+[Compare <%=ver_range%>](https://github.com/dry-rb/<%= project.name %>/compare/<%=ver_range%>)
+<% end %>
+
 <% end %>
