@@ -1,6 +1,6 @@
 # this file is managed by dry-rb/devtools project
 
-name: update CHANGELOG.md
+name: update CHANGELOG.md from PR merge commit
 
 on:
   push:
