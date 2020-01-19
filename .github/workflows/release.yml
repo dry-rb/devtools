@@ -42,4 +42,4 @@ jobs:
           ln -sf "$(bundle info ossy --path)/bin/ossy" bin/ossy
       - name: Publish to Rubygems
         run: |
-          bundle exec bin/ossy gh m $RELEASE_CREATOR dry-rb core && gem release
+          bundle exec bin/ossy gh m $RELEASE_CREATOR dry-rb core && echo "pushing to rubygems is disabled until we can verify tag signatures"
