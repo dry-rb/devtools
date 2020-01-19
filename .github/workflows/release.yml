@@ -13,22 +13,33 @@ jobs:
       GITHUB_LOGIN: dry-bot
       GITHUB_TOKEN: ${{secrets.GH_PAT}}
       GEM_HOST_API_KEY: ${{secrets.GEM_HOST_API_KEY}}
+      RELEASE_CREATOR: ${{github.event.client_payload.tag_creator}}
     steps:
       - uses: actions/checkout@v2
         with:
+          repository: ${{github.event.client_payload.repo}}
           ref: refs/tags/${{github.event.client_payload.tag}}
       - name: Set up Ruby
         uses: eregon/use-ruby-action@master
         with:
           ruby-version: 2.6
-      - name: Install dependencies
-        run: |
-          gem install gem-release
       - name: Set up gem credentials
         run: |
           mkdir -p ~/.gem
           echo ":rubygems_api_key: $GEM_HOST_API_KEY" > ~/.gem/credentials
           chmod 0600 ~/.gem/credentials
+      - name: Install latest bundler
+        run: |
+          gem install bundler
+      - name: Install dependencies
+        run: |
+          gem install gem-release
+      - name: Bundle
+        run: |
+          bundle install
+      - name: Symlink ossy
+        run: |
+          ln -sf "$(bundle info ossy --path)/bin/ossy" bin/ossy
       - name: Publish to Rubygems
         run: |
-          gem release
+          bundle exec bin/ossy gh m $RELEASE_CREATOR dry-rb core && gem release
