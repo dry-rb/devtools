@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+devtools="tmp/devtools"
+workflows="$devtools/workflows"
+config="project.yml"
+
+for path in `ls $workflows/*.yml`
+do
+  name="$(basename $path)";
+  custom=".github/workflows/custom/$name";
+
+  if [ -f $custom ]; then
+    bin/ossy configs merge $path $custom .github/workflows/$name
+  else
+    cp -v $path .github/workflows
+  fi
+done

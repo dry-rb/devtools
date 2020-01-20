@@ -35,18 +35,7 @@ jobs:
       - name: Compile file templates
         run: compile-templates
       - name: Update workflow files from devtools
-        run: |
-          for f in `ls tmp/devtools/workflows/*.yml`
-          do
-            n="$(basename $f)";
-            c=".github/workflows/custom/$n";
-
-            if [ -f $c ]; then
-              bin/ossy c m $f $c .github/workflows/$n
-            else
-              cp -v $f .github/workflows
-            fi
-          done
+        run: sync-workflows
       - name: Update configuration files from devtools
         run: |
           if [ -f ".github/workflows/custom_ci.yml" ]; then
