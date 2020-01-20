@@ -4,7 +4,7 @@ devtools="tmp/devtools"
 workflows="$devtools/workflows"
 config="project.yml"
 
-for path in `ls $workflows/*.yml`
+for path in $(ls $workflows/*.yml | grep -v sync_configs)
 do
   name="$(basename $path)";
   custom=".github/workflows/custom/$name";
