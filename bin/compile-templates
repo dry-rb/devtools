@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+repo=$1
+
+devtools="tmp/devtools"
+templates="$devtools/templates"
+config="project.yml"
+
+if [ -f $config ]; then
+  for name in `ls $templates`
+  do
+    bin/ossy t c "$templates/$name" $(basename $name .erb) $config
+  done
+  mv gemspec `echo $repo | cut -d / -f 2`.gemspec
+fi
