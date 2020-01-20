@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+sha=$1
+template=".devtools/templates/changelog.erb"
+config="project.yml"
+
+msg=$(git log --format=%B -n 1 $sha)
+
+if [[ "$msg" == *"Merge pull request"* && "$msg" == *"[changelog]"* ]]; then
+  changelog=$(ruby -e 'puts STDIN.read.split("[changelog]")[1].strip' <<< $msg)
+
+  echo "Adding the following entries:"
+  echo "$changelog"
+
+  bin/ossy ch u changelog.yml "$changelog"
+
+  git commit changelog.yml -m "[devtools] update changelog.yml from $sha"
+else
+  echo "No need to update changelog"
+fi
