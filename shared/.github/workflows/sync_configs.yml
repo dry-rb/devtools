@@ -29,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: bundle install --jobs 4 --retry 3
       - name: Symlink ossy
-        run: ln -sf "$(bundle info ossy --path)/bin/ossy" bin/ossy
+        run: bundle binstubs ossy
       - name: Clone devtools
         run: git clone https://github.com/dry-rb/devtools.git tmp/devtools
       - name: Compile file templates
