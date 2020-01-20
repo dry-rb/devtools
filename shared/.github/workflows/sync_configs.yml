@@ -37,12 +37,7 @@ jobs:
       - name: Update workflow files from devtools
         run: sync-workflows
       - name: Update configuration files from devtools
-        run: |
-          if [ -f ".github/workflows/custom_ci.yml" ]; then
-            rsync -arv --exclude '.github/workflows/ci.yml' tmp/devtools/shared/ . ;
-          else
-            rsync -arv tmp/devtools/shared/ . ;
-          fi
+        run: sync-shared-files
       - name: Commit changes
         run: |
           rm bin/ossy
