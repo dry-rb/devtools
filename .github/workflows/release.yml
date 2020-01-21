@@ -47,7 +47,7 @@ jobs:
           login=$(bin/ossy gh om "$name" dry-rb)
 
           if [[ $login == $RELEASE_CREATOR ]]; then
-            bin/ossy gh m $login dry-rb core --verify && gem release
+            bin/ossy gh m $login dry-rb core --verify=true && gem release
           else
             echo "Tagger is different than release creator: $login != $RELEASE_CREATOR"
           fi
