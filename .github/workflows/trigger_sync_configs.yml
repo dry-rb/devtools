@@ -29,4 +29,9 @@ jobs:
         env:
           GITHUB_LOGIN: dry-bot
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-        run: for name in `cat projects`; do bin/ossy gh w dry-rb/$name sync_configs; done
+        run: |
+          if [ -e $(git log -n 1 --format=%B | grep -q '[testing]') ]; then
+            bin/ossy gh w dry-rb/testing sync_configs
+          else
+            for name in `cat projects`; do bin/ossy gh w dry-rb/$name sync_configs; done
+          fi
