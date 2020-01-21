@@ -41,7 +41,7 @@ jobs:
           bundle install
       - name: Symlink ossy
         run: bundle binstubs ossy
-      - name: Publish to Rubygems
+      - name: Publish ${{github.event.client_payload.repo}} ${{github.event.client_payload.tag}} to Rubygems
         run: |
           name=$(bin/ossy gh t $RELEASE_REPO $RELEASE_TAG)
           login=$(bin/ossy gh om "$name" dry-rb)
