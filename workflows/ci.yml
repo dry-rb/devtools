@@ -67,13 +67,12 @@ jobs:
           ruby-version: 2.6
       - name: Install latest bundler
         run: |
-          gem install bundler
+          bundle install --jobs 4 --retry 3
+          bundle config set without 'tools benchmarks docs sql'
       - name: Bundle
-        run: |
-          bundle install
+        run: bundle install
       - name: Symlink ossy
-        run: |
-          ln -sf "$(bundle info ossy --path)/bin/ossy" bin/ossy
+        run: bundle binstubs ossy
       - name: Trigger release workflow
         run: |
           tag=$(echo $GITHUB_REF | cut -d / -f 3)
