@@ -14,6 +14,8 @@ jobs:
       GITHUB_TOKEN: ${{secrets.GH_PAT}}
       GEM_HOST_API_KEY: ${{secrets.GEM_HOST_API_KEY}}
       RELEASE_CREATOR: ${{github.event.client_payload.tag_creator}}
+      RELEASE_TAG: ${{github.event.client_payload.tag}}
+      RELEASE_REPO: ${{github.event.client_payload.repo}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -38,8 +40,14 @@ jobs:
         run: |
           bundle install
       - name: Symlink ossy
-        run: |
-          ln -sf "$(bundle info ossy --path)/bin/ossy" bin/ossy
+        run: bundle binstubs ossy
       - name: Publish to Rubygems
         run: |
-          bundle exec bin/ossy gh m $RELEASE_CREATOR dry-rb core && echo "pushing to rubygems is disabled until we can verify tag signatures"
+          name=$(bin/ossy gh t $RELEASE_REPO $RELEASE_TAG)
+          login=$(bin/ossy gh om "$name" dry-rb)
+
+          if [ $RELEASE_REPO == "dry-rb/testing" && $login == $RELEASE_CREATOR ]; then
+            bin/ossy gh m $login dry-rb core --verify && gem release
+          else
+            echo "Tagger is different than release creator: $login != $RELEASE_CREATOR"
+          fi
