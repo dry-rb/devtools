@@ -54,7 +54,7 @@ jobs:
         run: bundle exec rake
   release:
     runs-on: ubuntu-latest
-    if: contains(github.ref, 'tags')
+    if: contains(github.ref, 'tags') && github.event_name == 'create'
     needs: tests
     env:
       GITHUB_LOGIN: dry-bot
@@ -76,4 +76,4 @@ jobs:
       - name: Trigger release workflow
         run: |
           tag=$(echo $GITHUB_REF | cut -d / -f 3)
-          bundle exec bin/ossy gh w $GITHUB_REPOSITORY release --payload "{\"tag\":\"$tag\",\"tag_creator\":\"$GITHUB_ACTOR\",\"repo\":\"$GITHUB_REPOSITORY\"}"
+          bundle exec bin/ossy gh w dry-rb/devtools release --payload "{\"tag\":\"$tag\",\"tag_creator\":\"$GITHUB_ACTOR\",\"repo\":\"$GITHUB_REPOSITORY\"}"
