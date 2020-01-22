@@ -6,7 +6,7 @@ config="project.yml"
 
 msg=$(git log --format=%B -n 1 $sha)
 
-if [[ "$msg" == *"Merge pull request"* && "$msg" == *"[changelog]"* ]]; then
+if [[ "$msg" == *"[changelog]"* ]]; then
   changelog=$(ruby -e 'puts STDIN.read.split("[changelog]")[1].strip' <<< $msg)
 
   echo "Adding the following entries:"
