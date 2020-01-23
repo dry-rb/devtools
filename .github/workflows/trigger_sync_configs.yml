@@ -22,7 +22,7 @@ jobs:
         with:
           ruby-version: "2.6.x"
       - name: Install dependencies
-        run: gem install ossy
+        run: gem install ossy --no-document
       - name: Trigger config synchronization in dry-rb repositories
         env:
           GITHUB_LOGIN: dry-bot
