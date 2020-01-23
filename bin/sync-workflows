@@ -10,7 +10,7 @@ do
   custom=".github/workflows/custom/$name";
 
   if [ -f $custom ]; then
-    bin/ossy configs merge $path $custom .github/workflows/$name
+    ossy configs merge $path $custom .github/workflows/$name
   else
     cp -v $path .github/workflows
   fi

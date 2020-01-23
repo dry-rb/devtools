@@ -12,7 +12,7 @@ if [[ "$msg" == *"[changelog]"* ]]; then
   echo "Adding the following entries:"
   echo "$changelog"
 
-  bin/ossy ch u changelog.yml "$changelog"
+  ossy ch u changelog.yml "$changelog"
 
   git commit changelog.yml -m "[devtools] update changelog.yml from $sha"
 else

@@ -3,4 +3,4 @@
 template=".devtools/templates/changelog.erb"
 config="project.yml"
 
-bin/ossy ch g changelog.yml CHANGELOG.md $template --data-path $config
+ossy ch g changelog.yml CHANGELOG.md $template --data-path $config

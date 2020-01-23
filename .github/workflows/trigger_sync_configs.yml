@@ -22,16 +22,14 @@ jobs:
         with:
           ruby-version: "2.6.x"
       - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
-      - name: Symlink ossy
-        run: ln -sf "$(bundle info ossy --path)/bin/ossy" bin/ossy
+        run: gem install ossy
       - name: Trigger config synchronization in dry-rb repositories
         env:
           GITHUB_LOGIN: dry-bot
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           if [ -e $(git log -n 1 --format=%B | grep -q '[testing]') ]; then
-            bin/ossy gh w dry-rb/testing sync_configs
+            ossy gh w dry-rb/testing sync_configs
           else
-            for name in `cat projects`; do bin/ossy gh w dry-rb/$name sync_configs; done
+            for name in `cat projects`; do ossy gh w dry-rb/$name sync_configs; done
           fi
