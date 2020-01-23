@@ -46,7 +46,7 @@ jobs:
       - name: Commit
         run: |
           git add -A
-          git commit -m "[devtools] sync configs" || echo "nothing to commit"
+          git commit -m "[devtools] sync" || echo "nothing to commit"
       - name: Push changes
         run: |
           git pull --rebase origin master
