@@ -28,9 +28,7 @@ jobs:
           GITHUB_LOGIN: dry-bot
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          git log -n 1 --format=%B | grep -q '\[testing\]'
-          only_testing=$?
-          if [ $only_testing -eq 0 ]; then
+          if [ -z $(ruby -e 'puts `git log -n 1`["[testing]"]') ]; then
             echo "Syncing testing repo"
             ossy gh w dry-rb/testing sync_configs
           else
