@@ -29,7 +29,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           if [ -e $(git log -n 1 --format=%B | grep -q '\[testing\]') ]; then
+            echo "Syncing testing repo"
             ossy gh w dry-rb/testing sync_configs
           else
-            for name in `cat projects`; do ossy gh w dry-rb/$name sync_configs; done
+            for name in `cat projects`
+            do
+              echo "Syncing $name"
+              ossy gh w dry-rb/$name sync_configs
+            done
           fi
