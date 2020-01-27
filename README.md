@@ -65,3 +65,14 @@ Bump to 3.1.2
 version: 3.1.2
 summary: "This release is great"
 ```
+
+## Cherry-pick doc patches
+
+When a doc patch is sent the bot can cherry-pick it into version branches. Use the following syntax in merge commits:
+
+```
+docsite:release-1.2
+docsite:release-1.3
+```
+
+The example above patches `release-1.2` and `release-1.3` branches. Don't forget the PR should be based on `master`.
