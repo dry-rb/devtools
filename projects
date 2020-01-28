@@ -13,6 +13,7 @@ dry-logic
 dry-matcher
 dry-monads
 dry-monitor
+dry-rails
 dry-schema
 dry-struct
 dry-system
