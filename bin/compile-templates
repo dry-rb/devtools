@@ -9,7 +9,10 @@ config="project.yml"
 if [ -f $config ]; then
   for name in `ls $templates`
   do
-    ossy t c "$templates/$name" $(basename $name .erb) $config
+    if [ -f ".devtools/templates/$name" ]; then
+      ossy t c ".devtools/templates/$name" $(basename $name .erb) $config
+    else
+      ossy t c "$templates/$name" $(basename $name .erb) $config
+    fi
   done
-  mv -v gemspec $(echo $repo | cut -d / -f 2).gemspec
 fi
