@@ -22,5 +22,6 @@ dry-transformer
 dry-types
 dry-validation
 dry-view
+dry-web
 dry-web-roda
 testing
