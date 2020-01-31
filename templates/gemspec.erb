@@ -30,6 +30,8 @@ Gem::Specification.new do |spec|
   end %>
   spec.homepage      = 'https://dry-rb.org/gems/<%= name %>'
   spec.files         = Dir<%= files.inspect %>
+  spec.bindir        = 'bin'
+  spec.executables   = <%= Array(gemspec['executables']) %>
   spec.require_paths = ['lib']
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
