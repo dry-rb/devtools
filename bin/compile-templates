@@ -7,7 +7,6 @@ templates="$devtools/templates"
 config="project.yml"
 
 if [ -f $config ]; then
-  [ -f gemspec ] && rm gemspec
   for name in `ls $templates`
   do
     if [ -f ".devtools/templates/$name" ]; then
