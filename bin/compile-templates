@@ -7,6 +7,7 @@ templates="$devtools/templates"
 config="project.yml"
 
 if [ -f $config ]; then
+  [ -f gemspec ] && rm gemspec
   for name in `ls $templates`
   do
     if [ -f ".devtools/templates/$name" ]; then
@@ -15,4 +16,5 @@ if [ -f $config ]; then
       ossy t c "$templates/$name" $(basename $name .erb) $config
     fi
   done
+  mv -v gemspec $(echo $repo | cut -d / -f 2).gemspec
 fi
