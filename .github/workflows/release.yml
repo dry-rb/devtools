@@ -22,7 +22,7 @@ jobs:
           repository: ${{github.event.client_payload.repo}}
           ref: refs/tags/${{github.event.client_payload.tag}}
       - name: Set up Ruby
-        uses: eregon/use-ruby-action@master
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
       - name: Set up gem credentials
