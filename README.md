@@ -66,6 +66,20 @@ version: 3.1.2
 summary: "This release is great"
 ```
 
+### Adding `unreleased` version
+
+To add or update `unreleased` version simply set `version: unreleased` ie:
+
+```
+Add a feature
+
+[changelog]
+
+version: unreleased
+summary: "This release will be great"
+added: a feature!
+```
+
 ## Cherry-pick doc patches
 
 When a doc patch is sent the bot can cherry-pick it into version branches. Use the following syntax in merge commits:
