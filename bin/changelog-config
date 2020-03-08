@@ -1,24 +1,27 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'yaml'
+require 'English'
 
 def parse_lines(lines, skip_empty: true)
   lines.each_with_index { |line, idx|
     next if skip_empty && line.strip.empty?
+
     yield(line, idx)
   }
 end
 
 def release?(line)
-  %r[^## \d+\.\d+\.\d+].match?(line) || line.downcase.include?('unreleased')
+  /^## \d+\.\d+\.\d+/.match?(line) || line.downcase.include?('unreleased')
 end
 
 def entry?(type, line)
-  %r[^### #{type}].match?(line)
+  /^### #{type}/.match?(line)
 end
 
 def summary?(line)
-  %r[^\w+].match?(line) && !release?(line) && !line.start_with?('#')
+  /^\w+/.match?(line) && !release?(line) && !line.start_with?('#')
 end
 
 def stop_entry_parsing?(line)
@@ -37,16 +40,16 @@ lines = content.split("\n")
 
 parse_lines(lines) do |line|
   line.gsub!(/^\#{1,2} (?<type>Fixed|Changed|Added)/) do
-    "### #{$~[:type]}"
+    "### #{$LAST_MATCH_INFO[:type]}"
   end
 
-  if %r[^\#{1,2} v?\d].match?(line)
+  if /^\#{1,2} v?\d/.match?(line)
     line.gsub!(' / ', ' ')
 
     line.gsub!(' - ', ' ')
 
-    line.gsub!(%r[^\#{1,2} v?(?<version>.+) (?<date>.+)$]) do |*args|
-      "## #{$~[:version]} #{$~[:date]}"
+    line.gsub!(/^\#{1,2} v?(?<version>.+) (?<date>.+)$/) do |*_args|
+      "## #{$LAST_MATCH_INFO[:version]} #{$LAST_MATCH_INFO[:date]}"
     end
   end
 end
@@ -63,7 +66,7 @@ parse_lines(lines) do |line, idx|
   elsif summary?(line)
     curr_release['summary'] = line
   elsif entry?('Fixed', line)
-    parse_lines(lines[idx+1..-1], skip_empty: false) do |rl|
+    parse_lines(lines[(idx + 1)..-1], skip_empty: false) do |rl|
       break if stop_entry_parsing?(rl)
 
       if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
@@ -73,7 +76,7 @@ parse_lines(lines) do |line, idx|
       end
     end
   elsif entry?('Added', line)
-    parse_lines(lines[idx+1..-1], skip_empty: false) do |rl|
+    parse_lines(lines[(idx + 1)..-1], skip_empty: false) do |rl|
       break if stop_entry_parsing?(rl)
 
       if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
@@ -83,7 +86,7 @@ parse_lines(lines) do |line, idx|
       end
     end
   elsif entry?('Changed', line)
-    parse_lines(lines[idx+1..-1], skip_empty: false) do |rl|
+    parse_lines(lines[(idx + 1)..-1], skip_empty: false) do |rl|
       break if stop_entry_parsing?(rl)
 
       if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
