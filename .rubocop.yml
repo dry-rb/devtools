@@ -1,0 +1,5 @@
+inherit_from:
+  - shared/.rubocop.yml
+
+AllCops:
+  Exclude: []
