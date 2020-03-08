@@ -1,11 +1,11 @@
+AllCops:
+  Exclude: []
+  Include:
+    - shared/Gemfile.devtools
+
 inherit_from:
   - shared/.rubocop.yml
 
 inherit_mode:
   merge:
     - Include
-
-AllCops:
-  Exclude: []
-  Include:
-    - shared/Gemfile.devtools
