@@ -1,19 +1,25 @@
 #!/usr/bin/env bash
 
-repo=$1
-
 devtools="tmp/devtools"
 templates="$devtools/templates"
 config="project.yml"
 
 if [ -f $config ]; then
-  for name in `ls $templates`
+  project_name=$(ruby -ryaml -e "puts YAML.load(File.read('${config}'))['name']")
+
+  if [ -z "${project_name}" ]; then
+    echo "No 'name' configured in ${config}"
+    exit 1
+  fi
+
+  for template_name in `ls $templates`
   do
-    if [ -f ".devtools/templates/$name" ]; then
-      ossy t c ".devtools/templates/$name" $(basename $name .erb) $config
+    if [ -f ".devtools/templates/$template_name" ]; then
+      ossy t c ".devtools/templates/$template_name" $(basename $template_name .erb) $config
     else
-      ossy t c "$templates/$name" $(basename $name .erb) $config
+      ossy t c "$templates/$template_name" $(basename $template_name .erb) $config
     fi
   done
-  mv -v gemspec $(echo $repo | cut -d / -f 2).gemspec
+
+  mv -v gemspec "${project_name}.gemspec"
 fi
