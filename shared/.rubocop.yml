@@ -18,6 +18,11 @@ Layout/MultilineMethodCallIndentation:
 Layout/IndentFirstArrayElement:
   EnforcedStyle: consistent
 
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+  EnforcedStyle: no_space
+  EnforcedStyleForEmptyBraces: no_space
+
 Lint/HandleExceptions:
   Exclude:
     - "spec/spec_helper.rb"
@@ -76,6 +81,15 @@ Style/ClassAndModuleChildren:
 
 Style/ConditionalAssignment:
   Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+  ConsistentQuotesInMultiline: false
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
 
 Style/DateTime:
   Enabled: false
