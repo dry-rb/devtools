@@ -35,7 +35,7 @@ Naming/PredicateName:
 
 Naming/FileName:
   Exclude:
-    - "lib/dry-*.rb"
+    - "lib/*-*.rb"
 
 Naming/MethodName:
   Enabled: false
