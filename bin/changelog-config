@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'yaml'
-require 'English'
+require "yaml"
+require "English"
 
 def parse_lines(lines, skip_empty: true)
   lines.each_with_index { |line, idx|
@@ -13,7 +13,7 @@ def parse_lines(lines, skip_empty: true)
 end
 
 def release?(line)
-  /^## \d+\.\d+\.\d+/.match?(line) || line.downcase.include?('unreleased')
+  /^## \d+\.\d+\.\d+/.match?(line) || line.downcase.include?("unreleased")
 end
 
 def entry?(type, line)
@@ -21,19 +21,19 @@ def entry?(type, line)
 end
 
 def summary?(line)
-  /^\w+/.match?(line) && !release?(line) && !line.start_with?('#')
+  /^\w+/.match?(line) && !release?(line) && !line.start_with?("#")
 end
 
 def stop_entry_parsing?(line)
-  release?(line) || line.start_with?('### ') || line.include?('[Compare')
+  release?(line) || line.start_with?("### ") || line.include?("[Compare")
 end
 
 def add_entry(curr, type, line)
-  (curr[type] ||= []) << line.gsub(/^(\-?\*?)/, '').strip
+  (curr[type] ||= []) << line.gsub(/^(\-?\*?)/, "").strip
 end
 
 changelog_path = ARGV[0]
-output_path = changelog_path.downcase.gsub('.md', '.yml')
+output_path = changelog_path.downcase.gsub(".md", ".yml")
 
 content = File.read(changelog_path)
 lines = content.split("\n")
@@ -44,9 +44,9 @@ parse_lines(lines) do |line|
   end
 
   if /^\#{1,2} v?\d/.match?(line)
-    line.gsub!(' / ', ' ')
+    line.gsub!(" / ", " ")
 
-    line.gsub!(' - ', ' ')
+    line.gsub!(" - ", " ")
 
     line.gsub!(/^\#{1,2} v?(?<version>.+) (?<date>.+)$/) do |*_args|
       "## #{$LAST_MATCH_INFO[:version]} #{$LAST_MATCH_INFO[:date]}"
@@ -61,38 +61,38 @@ curr_entry = nil
 parse_lines(lines) do |line, idx|
   if release?(line)
     _, version, date = line.split
-    curr_release = { 'version' => version, 'date' => date }
+    curr_release = {"version" => version, "date" => date}
     data << curr_release
   elsif summary?(line)
-    curr_release['summary'] = line
-  elsif entry?('Fixed', line)
+    curr_release["summary"] = line
+  elsif entry?("Fixed", line)
     parse_lines(lines[(idx + 1)..-1], skip_empty: false) do |rl|
       break if stop_entry_parsing?(rl)
 
-      if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
+      if curr_entry && (rl.start_with?("  ") || rl.strip.empty?)
         (curr_entry.last << "\n#{rl}").strip
       else
-        curr_entry = add_entry(curr_release, 'fixed', rl)
+        curr_entry = add_entry(curr_release, "fixed", rl)
       end
     end
-  elsif entry?('Added', line)
+  elsif entry?("Added", line)
     parse_lines(lines[(idx + 1)..-1], skip_empty: false) do |rl|
       break if stop_entry_parsing?(rl)
 
-      if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
+      if curr_entry && (rl.start_with?("  ") || rl.strip.empty?)
         (curr_entry.last << "\n#{rl}").strip
       else
-        curr_entry = add_entry(curr_release, 'added', rl)
+        curr_entry = add_entry(curr_release, "added", rl)
       end
     end
-  elsif entry?('Changed', line)
+  elsif entry?("Changed", line)
     parse_lines(lines[(idx + 1)..-1], skip_empty: false) do |rl|
       break if stop_entry_parsing?(rl)
 
-      if curr_entry && (rl.start_with?('  ') || rl.strip.empty?)
+      if curr_entry && (rl.start_with?("  ") || rl.strip.empty?)
         (curr_entry.last << "\n#{rl}").strip
       else
-        curr_entry = add_entry(curr_release, 'changed', rl)
+        curr_entry = add_entry(curr_release, "changed", rl)
       end
     end
   end
