@@ -5,7 +5,7 @@ devtools="tmp/devtools"
 shared="$devtools/shared/"
 
 if [ -f "$workflows/custom_ci.yml" ]; then
-  rsync -arv --exclude "$workflows/ci.yml" $shared .
+  rsync -arv --exclude "$shared/ci.yml" $shared .
 else
   rsync -arv $shared .
 fi
