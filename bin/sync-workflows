@@ -12,6 +12,6 @@ do
   if [ -f $custom ]; then
     ossy configs merge $path $custom .github/workflows/$name
   else
-    cp -v $path .github/workflows
+    [ -f ".github/workflows/custom_$name" ] || cp -v $path .github/workflows
   fi
 done

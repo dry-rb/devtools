@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
-workflows=".github/workflows"
 devtools="tmp/devtools"
 shared="$devtools/shared/"
 
-if [ -f "$workflows/custom_ci.yml" ]; then
-  rsync -arv --exclude "$shared/ci.yml" $shared .
-else
-  rsync -arv $shared .
-fi
+rsync -arv $shared .
