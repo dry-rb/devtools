@@ -35,7 +35,6 @@ jobs:
           - ruby: "2.6"
             coverage: "true"
     env:
-      CLASSPATH: "" # tmp jruby build workaround
       COVERAGE: ${{matrix.coverage}}
     steps:
       - uses: actions/checkout@v1
