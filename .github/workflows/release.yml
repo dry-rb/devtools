@@ -24,7 +24,18 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: 2.7
+      - name: Check version
+        run: |
+          repo_name=`${{github.event.client_payload.repo}} | cut -d / -f 2`
+          lib_name=`echo $repo_name | cut -d - -f 2`
+          expected=`echo "${{github.event.client_payload.tag}}" | cut -c 2-`
+          actual=`grep VERSION lib/dry/$lib_name/version.rb | ruby -e 'eval(STDIN.read); puts VERSION'`
+
+          if [[ ! $expected -eq $actual ]]; then
+            echo "Version $actual in version.rb doesn't match expected $expected"
+            exit 1
+          fi
       - name: Set up gem credentials
         run: |
           mkdir -p ~/.gem
