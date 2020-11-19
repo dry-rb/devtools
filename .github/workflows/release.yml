@@ -32,7 +32,7 @@ jobs:
           expected=`echo "${{github.event.client_payload.tag}}" | cut -c 2-`
           actual=`grep VERSION lib/dry/$lib_name/version.rb | ruby -e 'eval(STDIN.read); puts VERSION'`
 
-          if [[ ! "$expected" -eq "$actual" ]]; then
+          if [[ ! $expected = $actual ]]; then
             echo "Version $actual in version.rb doesn't match expected $expected"
             exit 1
           fi
