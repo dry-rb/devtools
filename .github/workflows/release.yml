@@ -27,7 +27,7 @@ jobs:
           ruby-version: 2.7
       - name: Check version
         run: |
-          repo_name=`${{github.event.client_payload.repo}} | cut -d / -f 2`
+          repo_name=`echo ${{github.event.client_payload.repo}} | cut -d / -f 2`
           lib_name=`echo $repo_name | cut -d - -f 2`
           expected=`echo "${{github.event.client_payload.tag}}" | cut -c 2-`
           actual=`grep VERSION lib/dry/$lib_name/version.rb | ruby -e 'eval(STDIN.read); puts VERSION'`
