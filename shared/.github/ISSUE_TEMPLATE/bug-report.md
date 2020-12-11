@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Before you submit this: WE ONLY ACCEPT BUG REPORTS AND FEATURE REQUESTS**
+**Before you submit this: WE ONLY ACCEPT BUG REPORTS**
 
 For more information see `CONTRIBUTING.md`.
 
