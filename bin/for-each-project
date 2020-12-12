@@ -3,6 +3,7 @@
 # frozen_string_literal: true
 
 require "pathname"
+require "open3"
 
 projects = File.read("projects").split("\n")
 
@@ -15,9 +16,14 @@ projects.each do |project|
   puts "*"*80
   puts "\n[#{project}] #{cmd}\n\n"
 
-  if system("cd #{projects_path.join(project).realpath} && #{cmd}")
-    puts "\n[#{project}] success\n\n"
-  else
-    warn "[#{project}] failure!"
+  Open3.popen3(cmd, chdir: projects_path.join(project)) do |_stdin, stdout, stderr, wait_thr|
+    status = wait_thr.value
+
+    if status.success?
+      puts "#{stdout.read}\n"
+      puts "\n[#{project}] success\n\n"
+    else
+      warn "\n[#{project}] failure: #{stderr.read}\n\n"
+    end
   end
 end
