@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require "pathname"
+
+projects = File.read("projects").split("\n")
+
+projects_path = Pathname("..").freeze
+devtools_path = projects_path.join("devtools").realpath.freeze
+
+cmd = ARGV.join(" ")
+
+projects.each do |project|
+  puts "*"*80
+  puts "\n[#{project}] #{cmd}\n\n"
+
+  if system("cd #{projects_path.join(project).realpath} && #{cmd}")
+    puts "\n[#{project}] success\n\n"
+  else
+    puts "[#{project}] failure! exiting"
+    exit(1)
+  end
+end
