@@ -18,7 +18,6 @@ projects.each do |project|
   if system("cd #{projects_path.join(project).realpath} && #{cmd}")
     puts "\n[#{project}] success\n\n"
   else
-    puts "[#{project}] failure! exiting"
-    exit(1)
+    warn "[#{project}] failure!"
   end
 end
