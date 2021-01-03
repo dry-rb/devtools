@@ -53,3 +53,15 @@ jobs:
           else
             echo "Tagger is different than release creator: $login != $RELEASE_CREATOR"
           fi
+      - name: Generate release file
+        run: ossy r g changelog.yml release.md .devtools/templates/changelog.erb
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GH_PAT}}
+        with:
+          repo: ${{env.RELEASE_REPO}}
+          tag_name: ${{env.RELEASE_TAG}}
+          release_name: ${{env.RELEASE_TAG}}
+          body_path: release.md
