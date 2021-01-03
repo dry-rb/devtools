@@ -61,7 +61,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GH_PAT}}
         with:
-          repo: format(env.RELEASE_REPO, 'dry-rb/', '')
+          repo: ${{format(env.RELEASE_REPO, 'dry-rb/', '')}}
           tag_name: ${{env.RELEASE_TAG}}
           release_name: ${{env.RELEASE_TAG}}
           body_path: release.md
