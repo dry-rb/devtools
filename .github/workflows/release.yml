@@ -17,6 +17,7 @@ jobs:
       RELEASE_TAG: ${{github.event.client_payload.tag}}
       RELEASE_REPO: ${{github.event.client_payload.repo}}
       RELEASE_REPO_NAME: ${{github.event.client_payload.repo_name}}
+      RELEASE_SHA: ${{github.event.client_payload.sha}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -64,5 +65,6 @@ jobs:
         with:
           repo: ${{env.RELEASE_REPO_NAME}}
           tag_name: ${{env.RELEASE_TAG}}
+          commitish: ${{env.RELEASE_SHA}}
           release_name: ${{env.RELEASE_TAG}}
           body_path: release.md
