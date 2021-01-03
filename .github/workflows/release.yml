@@ -16,6 +16,7 @@ jobs:
       RELEASE_CREATOR: ${{github.event.client_payload.tag_creator}}
       RELEASE_TAG: ${{github.event.client_payload.tag}}
       RELEASE_REPO: ${{github.event.client_payload.repo}}
+      RELEASE_REPO_NAME: ${{github.event.client_payload.repo_name}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -61,7 +62,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GH_PAT}}
         with:
-          repo: ${{format(env.RELEASE_REPO, 'dry-rb/', '')}}
+          repo: ${{env.RELEASE_REPO_NAME}}
           tag_name: ${{env.RELEASE_TAG}}
           release_name: ${{env.RELEASE_TAG}}
           body_path: release.md
