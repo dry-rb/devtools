@@ -56,7 +56,7 @@ jobs:
             echo "Tagger is different than release creator: $login != $RELEASE_CREATOR"
           fi
       - name: Generate release file
-        run: ossy r g changelog.yml release.md .devtools/templates/changelog.erb
+        run: ossy r g changelog.yml release.md .devtools/templates/release.erb --data-path project.yml
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
