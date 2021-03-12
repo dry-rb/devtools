@@ -2,6 +2,16 @@
 
 Common tools and configs used in dry-rb projects
 
+## Release workflow
+
+The release workflow is triggered from ci builds that are triggered by tag creation. Before creating and pushing a new tag, remember to:
+
+- [ ] ensure that the version is updated in the `version.rb` file
+- [ ] ensure that the latest changelog entry corresponds to the current version
+- [ ] ensure that the latest changelog entry has the correct release date
+
+!! **IMPORTANT** release workflow will only pass if *the tag creator is a member of the core team on GitHub* and *the commit that created the tag is signed and verified by GitHub*
+
 ## Keeping CHANGELOG.md up to date
 
 Use the following syntax in your **commit messages** to have `CHANGELOG.md` automatically updated in dry-rb repos:
