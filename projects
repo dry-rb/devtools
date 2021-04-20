@@ -6,6 +6,7 @@ dry-core
 dry-effects
 dry-equalizer
 dry-events
+dry-files
 dry-inflector
 dry-initializer
 dry-logger
