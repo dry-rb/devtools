@@ -4,7 +4,6 @@ dry-configurable
 dry-container
 dry-core
 dry-effects
-dry-equalizer
 dry-events
 dry-files
 dry-inflector
