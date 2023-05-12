@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require "pathname"
+project = ARGV[0]
+devtools = Pathname(".").realpath
+
+Dir.chdir("../#{project}") do
+  versions = `git tag | sort -r`.split.map(&:strip)
+
+  branch_versions = `git tag | sort -r | cut -d . -f 1,2 | uniq`
+    .split.map(&:strip)
+
+  branches = `git ls-remote -q --heads | grep "release-"`
+    .split.map(&:strip).grep(/refs/).map { |name| name.split("/").last }
+
+  branches.each do |branch|
+    begin
+      tag = "v#{branch.split("-").last}"
+
+      system("git checkout -b #{branch} --track origin/#{branch} || (git checkout #{branch} && git pull origin #{branch})")
+
+      if Dir.exist?("docsite")
+        output = system "cd #{devtools} && bin/add-docsite #{project} #{tag} ../dry-rb.org"
+        puts output.inspect
+      else
+        puts "=> release #{tag} does not have a docsite, skipping..."
+      end
+    rescue => e
+      puts "ERROR #{e.inspect}"
+    ensure
+      system("git checkout main")
+    end
+  end
+end

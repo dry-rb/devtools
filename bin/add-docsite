@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require "pathname"
+require "yaml"
+
+project, tag, website = ARGV
+
+version = tag[/\d+\.\d+/]
+release = "release-#{version}"
+website_path = Pathname(website).realpath
+projects_yaml = website_path.join("data/projects.yml")
+
+puts "Adding #{project} #{version} to dry-rb.org..."
+
+Dir.chdir(website_path) do
+  project_data = YAML.load_file(projects_yaml)
+  project_entry = project_data.detect { |entry| entry["name"] == project }
+
+  if project_entry
+    version_entry = {"value" => version, "branch" => release}
+
+    if project_entry["versions"].include?(version_entry)
+      puts "Version #{version_entry.inspect} already exists. Skipping..."
+    else
+      project_versions = project_entry["versions"]
+      project_versions << version_entry
+      project_versions.sort! { |entry| entry["value"].to_f }
+
+      File.write(projects_yaml, YAML.dump(project_data))
+
+      system("git commit data/projects.yml -m '[devtools] add #{project} #{tag}'")
+      system("git push origin main")
+    end
+  else
+    raise "#{project} is not a valid dry-rb gem"
+  end
+end
