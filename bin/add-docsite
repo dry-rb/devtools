@@ -24,7 +24,7 @@ Dir.chdir(website_path) do
     else
       project_versions = project_entry["versions"]
       project_versions << version_entry
-      project_versions.sort! { |entry| entry["value"].to_f }
+      project_versions.sort_by! { |entry| entry["value"].split(".").map(&:to_i) }.reverse!
 
       File.write(projects_yaml, YAML.dump(project_data))
 
