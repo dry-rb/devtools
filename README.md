@@ -99,4 +99,4 @@ docsite:release-1.2
 docsite:release-1.3
 ```
 
-The example above patches `release-1.2` and `release-1.3` branches. Don't forget the PR should be based on `master`.
+The example above patches `release-1.2` and `release-1.3` branches. Don't forget the PR should be based on `main`.
