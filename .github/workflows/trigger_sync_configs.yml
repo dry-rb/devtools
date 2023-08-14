@@ -20,7 +20,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2.x"
+          ruby-version: "3.2"
       - name: Install dependencies
         run: gem install ossy --no-document
       - name: Trigger config synchronization in dry-rb repositories
