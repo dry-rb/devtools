@@ -10,7 +10,7 @@ on:
       - workflows/**
       - projects
     branches:
-      - master
+      - main
 
 jobs:
   main:
