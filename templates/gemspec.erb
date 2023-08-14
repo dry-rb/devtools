@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.metadata['source_code_uri']   = 'https://github.com/dry-rb/<%= name %>'
   spec.metadata['bug_tracker_uri']   = 'https://github.com/dry-rb/<%= name %>/issues'
 
-  spec.required_ruby_version = <%= gemspec.fetch('required_ruby_version', '>= 2.5.0').inspect %>
+  spec.required_ruby_version = <%= gemspec.fetch('required_ruby_version', '>= 3.0.0').inspect %>
 
   # to update dependencies edit project.yml<%
   if gemspec.key?('runtime_dependencies')
