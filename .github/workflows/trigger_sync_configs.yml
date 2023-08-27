@@ -9,6 +9,7 @@ on:
       - templates/**
       - workflows/**
       - projects
+      - bin/**
     branches:
       - main
 
